@@ -339,6 +339,10 @@ class Toolkit
     public function ldapLookup($crsid)
     {
         $info = NULL;
+		if (!function_exists("ldap_connect"))
+		{
+			return FALSE;
+		}
         $ds = ldap_connect("ldap://ldap.lookup.cam.ac.uk", 389);
         if ($ds)
         {
