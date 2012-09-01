@@ -105,10 +105,9 @@ else
 	}
 
 	$datePickerHTML = "<table class='datePickerTable'><tr>";
-	for ($i = 0; $i < 12; $i++)
+	for ($m = 0; $m < 12; $m++)
 	{
-		$startOfMonth = mktime(0,0,0,date("m")+$i,1,date("Y"));
-		$endOfMonth = mktime(0,0,0,date("m")+$i+1,0,date("Y"));
+		$startOfMonth = mktime(0,0,0,date("m")+$m,1,date("Y"));
 		$datePickerHTML .= "<td>";
 		$datePickerHTML .= "<h2>".date("M Y",$startOfMonth)."</h2>\n";
 
@@ -117,6 +116,7 @@ else
 			$datePickerHTML .= "<th>$day</th>";
 		$datePickerHTML .= "</tr><tr>";
 		$printingWeekDay = 0;
+
 		while ($printingWeekDay != date("w",$startOfMonth))
 		{
 			$datePickerHTML .= "<td></td>";
@@ -126,8 +126,11 @@ else
 		}
 	
 		$dates = array();
-		for ($t = $startOfMonth; $t < ($endOfMonth+24*60*60); $t += 24*60*60)
+		$daysInMonth = date('t', mktime(0, 0, 0, date("m")+$m, 1, date("Y")));
+
+		for ($d = 0; $d < $daysInMonth; $d++)
 		{
+			$t = mktime(0,0,0,date("m")+$m, $d+1, date("Y"));
 			$datePickerHTML .= "<td class='date'><a href='#' onclick='return false' class='dateLink' date='$t'>".date("d",$t)."</a></td>";
 			// check if we've reached end of week, should be new row in table
 			if (($printingWeekDay+1) % 7 == 0)
@@ -138,7 +141,7 @@ else
 		}
 		$datePickerHTML .= "</tr>\n</table>";
 		$datePickerHTML .= "</td>";
-		if (($i+1) % 4 == 0)
+		if (($m+1) % 4 == 0)
 			$datePickerHTML .= "</tr><tr>";
 	}
 	$datePickerHTML .=  "</tr></table>";
