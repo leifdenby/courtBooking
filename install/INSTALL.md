@@ -22,7 +22,9 @@ Next we create the correct tables in the MYSQL database
 		$ mysql -u courtBooking -p courtBooking < courtBooking.sql
 
 Copy the base config file `inc/config.orig.php` to `inc/config.php` and change
-the database username, password, database and add the PEAR framework path.
+the database username, password, database, add PEAR framework path and MOST
+IMPORTANTLY changed the password salt (this is to make the storage of your
+users' password more secure).
 
 And finally edit 'setup_admin.php' and execute with PHP to create and admin user
 

@@ -34,7 +34,6 @@ class Core
 	
 	private $session_expire_limit = 30;
 	
-	
 	function setDebugging($newValue) {
 		$this->debugging = $newValue;
 		if ($newValue) {
@@ -63,6 +62,9 @@ class Core
 			"hostspec"      => Config::$DB_HOSTNAME,
 			"database"      => Config::$DB_DATABASE
 		);
+
+		$this->PASSWORD_SALT = Config::$PASSWORD_SALT;
+	
 		
 		if (session_id() == "")
 		{
@@ -1203,9 +1205,6 @@ class FieldClubUser extends FieldClub
 	public static $USERSTATUS_RED = 2;
 	public static $USERSTATUS__MAP = array (0 => "green", 1 => "yellow", 2 => "red");
 
-
-	private $PASSWORD_SALT = "trinityFieldClub";
-	
 	private $id = NULL;
 	public $accessLevel = NULL;
 	public $name = NULL;
@@ -1305,7 +1304,7 @@ class FieldClubUser extends FieldClub
 
 	public function encodePassword($string)
 	{
-		return md5($this->PASSWORD_SALT . $string);
+		return md5($this->core->PASSWORD_SALT . $string);
 	}
 
 	public function loaded()

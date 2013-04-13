@@ -11,6 +11,8 @@ class Config extends Core
 	static protected $DB_PASSWORD = "password";
 	static protected $DB_HOSTNAME = "localhost:3309";
 	static protected $DB_DATABASE = "courtBooking";
+	
+	static protected $PASSWORD_SALT = 'changethisstring!';
 
 	static protected $SESSION_EXPIRE_LIMIT = 300;
 

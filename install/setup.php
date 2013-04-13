@@ -13,10 +13,16 @@ $core = new Core();
 $user = new FieldClubUser($core);
 $user->accessLevel = FieldClubUser::$ACCESSLEVEL_ADMIN;
 $user->loginType = FieldClubUser::$LOGINTYPE_ALTERNATIVE_LOGIN;
+$user->name = 'Admin user';
 $user->username = 'lcd33';
 $user->password = 'password';
 $user->email = 'myemail@gmail.com';
 
-print $user->save();
+if ($user->save()) {
+	echo "Done!";
+}
+else {
+	echo $core->outputErrors('');
+}
 
 ?>
