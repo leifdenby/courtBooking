@@ -19,7 +19,7 @@ class Config extends Core
     
 	static protected $SMTP_HOST = 'localhost';
 
-	static protected $PEAR_DIR = '/usr/local/var/www/htdocs/courtbooking/pear/PEAR';
+	static protected $PEAR_DIR = '/home/leif/pear/share/pear';
 
 	static protected $SITE_ROOT_URL = 'http://yourdomain.com/courtbooking/';
 
