@@ -127,8 +127,20 @@ else
             echo "<input type='hidden' value='{$fieldClubCourt->usedBySports[0]}' name='sportId'>";
         }
 
+		// Find out if the user is captain of a team which may play in this court
+		// this means that the teams that the user is captain of should be checked for
+		// sport and it should then be checked if that court is used for that sport
+		// (hope that makes sense)
 
-        if (count($fieldClubAccess->captainOfTeams) == 0)
+		$captained_teams_that_use_court = array();
+		foreach ($fieldClubAccess->captainOfTeams as $teamid) {
+			$teamObj = new FieldClubTeam($teamid);
+			if (in_array($teamObj->getSport(), $fieldClubCourt->usedBySports)) {
+				$captained_teams_that_use_court = true;
+			}
+		}
+
+        if (count($captained_teams_that_use_court) == 0)
         {   
             echo '<input type="hidden" value="-1" name="teamId" id="teamId" />';
             if (count($fieldClubCourt->usedBySports) == 1)
@@ -151,16 +163,12 @@ else
         
             $teams = array();
             $teams[] = array("-1", "yourself");
-            if (count($fieldClubAccess->captainOfTeams) > 0)
+            if (count($captained_teams_that_use_court) > 0)
             {
-                foreach ($fieldClubAccess->captainOfTeams as $teamId)
+                foreach ($captained_teams_that_use_court as $fieldClubTeam)
                 {
-                    $fieldClubTeam = new FieldClubTeam($core, $teamId);
                     $fieldClubSport = new FieldClubSport($core, $fieldClubTeam->sportId);
-                    if ($fieldClubCourt->isUsedBySport($fieldClubSport->getId()))
-                    {
-                        $teams[] = array("$teamId", "$fieldClubTeam ($fieldClubSport)");
-                    }
+                    $teams[] = array("$teamId", "$fieldClubTeam ($fieldClubSport)");
                 }
             }
             foreach ($teams as $team)
